@@ -6,14 +6,24 @@ export default class ServerPlugin extends BasePlugin {
   public name = "Plugin Template";
   public description = "This is a template for an h1z1-server plugin.";
   public author = "H1emu";
-  public version = "0.1"
+  public version = "0.1";
 
+  private chatTextMessage!: string;
+
+  /**
+   * This method is called by PluginManager, do NOT call this manually
+   * Use this method to set any plugin properties from the values in your config.yaml
+  */ 
+  public loadConfig(config: any) {
+    this.chatTextMessage = config.chatTextMessage;
+  }
+  
   public init(server: ZoneServer2016): void {
 
     // an example of how to override the default behavior of any public ZoneServer2016 function
     const sendChatText = server.sendChatText;
     server.sendChatText = (client: Client, message: string, clearChat?: boolean) => {
-      server.sendAlert(client, "Hooked SendChatText!");
+      server.sendAlert(client, this.chatTextMessage);
       sendChatText.call(server, client, message, clearChat);
     }
   }
