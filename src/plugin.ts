@@ -18,7 +18,7 @@ export default class ServerPlugin extends BasePlugin {
     this.chatTextMessage = config.chatTextMessage;
   }
   
-  public init(server: ZoneServer2016): void {
+  public async init(server: ZoneServer2016): Promise<void> {
 
     // an example of how to override the default behavior of any public ZoneServer2016 function
     const sendChatText = server.sendChatText;
