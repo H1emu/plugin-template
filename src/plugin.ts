@@ -1,6 +1,7 @@
 import { BasePlugin } from "@h1z1-server/out/servers/ZoneServer2016/managers/pluginmanager.js";
 import { ZoneServer2016} from "@h1z1-server/out/servers/ZoneServer2016/zoneserver.js";
 import { ZoneClient2016 as Client } from "@h1z1-server/out/servers/ZoneServer2016/classes/zoneclient";
+import { PermissionLevels } from "@h1z1-server/out/servers/ZoneServer2016/commands/types";
 
 export default class ServerPlugin extends BasePlugin {
   public name = "Plugin Template";
@@ -33,5 +34,14 @@ export default class ServerPlugin extends BasePlugin {
       // call the original function after your custom behavior
       ClientIsReady.call(server._packetHandlers, server, client, packet);
     }
+
+    // an example of how to add a custom command
+    server.pluginManager.registerCommand(this, server, {
+      name: "testcommand",
+      permissionLevel: PermissionLevels.ADMIN, // determines what permission level a user needs to use this command
+      execute: (server: ZoneServer2016, client: Client, args: Array<string>) => {
+        server.sendAlert(client, "Executed test command!");
+      }
+    });
   }
 }
