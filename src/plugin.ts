@@ -26,14 +26,10 @@ export default class ServerPlugin extends BasePlugin {
       server.sendAlert(client, this.chatTextMessage);
     }, {callBefore: false, callAfter: true})
 
-    // an example of how to override the default behavior of any method outside of the ZoneServer2016 class
-    const ClientIsReady = server._packetHandlers.ClientIsReady;
-    server._packetHandlers.ClientIsReady = (server: ZoneServer2016, client: Client, packet: any) => {
+    // an example of how to override the default behavior of any method outside of the ZoneServer2016 class (_packetHandlers in this example)
+    server.pluginManager.hookMethod(this, server._packetHandlers, "ClientIsReady", (server: ZoneServer2016, client: Client, packet: any)=> {
       console.log(`Client ${client.character.characterId} is ready!`);
-
-      // call the original function after your custom behavior
-      ClientIsReady.call(server._packetHandlers, server, client, packet);
-    }
+    }, {callBefore: false, callAfter: true})
 
     // an example of how to add a custom command
     server.pluginManager.registerCommand(this, server, {
