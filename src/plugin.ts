@@ -20,9 +20,18 @@ export default class ServerPlugin extends BasePlugin {
   
   public async init(server: ZoneServer2016): Promise<void> {
 
-    // an example of how to override the default behavior of any public ZoneServer2016 function
+    // an example of how to override the default behavior of any public ZoneServer2016 method
     server.pluginManager.hookMethod(server, "sendChatText", (client: Client, message: string, clearChat?: boolean)=> {
       server.sendAlert(client, this.chatTextMessage);
     }, {callBefore: false, callAfter: true})
+
+    // an example of how to override the default behavior of any method outside of the ZoneServer2016 class
+    const ClientIsReady = server._packetHandlers.ClientIsReady;
+    server._packetHandlers.ClientIsReady = (server: ZoneServer2016, client: Client, packet: any) => {
+      console.log(`Client ${client.character.characterId} is ready!`);
+
+      // call the original function after your custom behavior
+      ClientIsReady.call(server._packetHandlers, server, client, packet);
+    }
   }
 }
