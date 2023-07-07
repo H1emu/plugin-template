@@ -21,7 +21,7 @@ export default class ServerPlugin extends BasePlugin {
   public async init(server: ZoneServer2016): Promise<void> {
 
     // an example of how to override the default behavior of any public ZoneServer2016 method
-    server.pluginManager.hookMethod(server, "sendChatText", (client: Client, message: string, clearChat?: boolean)=> {
+    server.pluginManager.hookMethod(this, server, "sendChatText", (client: Client, message: string, clearChat?: boolean)=> {
       server.sendAlert(client, this.chatTextMessage);
     }, {callBefore: false, callAfter: true})
 
