@@ -9,13 +9,23 @@ export default class ServerPlugin extends BasePlugin {
   public author = "H1emu";
   public version = "0.1";
   public commands = [
-    // an example of how to add a custom command
+    // examples of how to add a custom command
     {
       name: "testcommand",
+      description: "This is an example of how to add a custom command.",
       permissionLevel: PermissionLevels.ADMIN, // determines what permission level a user needs to use this command
       execute: (server: ZoneServer2016, client: Client, args: Array<string>) => {
         // the code to executed when a command is trigged by an authorized user
         server.sendAlert(client, "Executed test command!");
+      }
+    },
+    {
+      name: "pluginhelp",
+      description: "An example of how to list custom commands your plugin adds.",
+      permissionLevel: PermissionLevels.DEFAULT, // determines what permission level a user needs to use this command
+      execute: (server: ZoneServer2016, client: Client, args: Array<string>) => {
+        // the code to executed when a command is trigged by an authorized user
+        server.pluginManager.listCommands(server, client, this);
       }
     }
   ]
