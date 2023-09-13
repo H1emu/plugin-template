@@ -21,7 +21,7 @@ export default class ServerPlugin extends BasePlugin {
     },
     {
       name: "pluginhelp",
-      description: "An example of how to list custom commands your plugin adds.",
+      description: "This is an example of how to list custom commands your plugin adds.",
       permissionLevel: PermissionLevels.DEFAULT, // determines what permission level a user needs to use this command
       execute: (server: ZoneServer2016, client: Client, args: Array<string>) => {
         // the code to executed when a command is trigged by an authorized user
