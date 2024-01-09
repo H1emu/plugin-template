@@ -8,6 +8,27 @@ export default class ServerPlugin extends BasePlugin {
   public description = "This is a template for an h1z1-server plugin.";
   public author = "H1emu";
   public version = "0.1";
+  public commands = [
+    // examples of how to add a custom command
+    {
+      name: "testcommand",
+      description: "This is an example of how to add a custom command.",
+      permissionLevel: PermissionLevels.ADMIN, // determines what permission level a user needs to use this command
+      execute: (server: ZoneServer2016, client: Client, args: Array<string>) => {
+        // the code to executed when a command is trigged by an authorized user
+        server.sendAlert(client, "Executed test command!");
+      }
+    },
+    {
+      name: "pluginhelp",
+      description: "This is an example of how to list custom commands your plugin adds.",
+      permissionLevel: PermissionLevels.DEFAULT, // determines what permission level a user needs to use this command
+      execute: (server: ZoneServer2016, client: Client, args: Array<string>) => {
+        // the code to executed when a command is trigged by an authorized user
+        server.pluginManager.listCommands(server, client, this);
+      }
+    }
+  ]
 
   private chatTextMessage!: string;
 
@@ -30,14 +51,5 @@ export default class ServerPlugin extends BasePlugin {
     server.pluginManager.hookMethod(this, server._packetHandlers, "ClientIsReady", (server: ZoneServer2016, client: Client, packet: any)=> {
       console.log(`Client ${client.character.characterId} is ready!`);
     }, {callBefore: false, callAfter: true})
-
-    // an example of how to add a custom command
-    server.pluginManager.registerCommand(this, server, {
-      name: "testcommand",
-      permissionLevel: PermissionLevels.ADMIN, // determines what permission level a user needs to use this command
-      execute: (server: ZoneServer2016, client: Client, args: Array<string>) => {
-        server.sendAlert(client, "Executed test command!");
-      }
-    });
   }
 }
